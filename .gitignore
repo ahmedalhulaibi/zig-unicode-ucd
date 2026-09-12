@@ -4,3 +4,4 @@ zig-out
 deps.zig
 .zigmod
 zigmod.lock
+zig-pkg

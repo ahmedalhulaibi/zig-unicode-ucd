@@ -1,0 +1,23 @@
+.{
+    .name = .unicode_ucd,
+    .version = "0.0.0",
+    .dependencies = .{
+        .extras = .{
+            .url = "git+https://github.com/nektro/zig-extras.git#feae209ba5cbc9b92a240f2e8e531c1b913bef3f",
+            .hash = "N-V-__8AAA8_AQBkM4Xem9XXXgxCgYnWRd_aDhQadl5wo_Y6",
+        },
+    },
+    .minimum_zig_version = "0.16.0",
+    .fingerprint = 0xff6a4a2e9caf3bd4,
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "generate.zig",
+        "scripts",
+        "src",
+        "test.zig",
+        "LICENSE",
+        "README.md",
+        "licenses.txt",
+    },
+}
