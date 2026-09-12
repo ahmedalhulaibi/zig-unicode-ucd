@@ -14,6 +14,7 @@ const files = [_]type{
     @import("./scripts/EastAsianWidth.zig"),
     @import("./scripts/EmojiSources.zig"),
     @import("./scripts/EquivalentUnifiedIdeograph.zig"),
+    @import("./scripts/GraphemeBreakProperty.zig"),
     @import("./scripts/HangulSyllableType.zig"),
     @import("./scripts/IndicPositionalCategory.zig"),
     @import("./scripts/IndicSyllabicCategory.zig"),

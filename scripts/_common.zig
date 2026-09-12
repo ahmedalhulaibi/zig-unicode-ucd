@@ -1,7 +1,4 @@
 const std = @import("std");
-const zfetch = @import("zfetch");
-const fmtValueLiteral = @import("fmt-valueliteral").fmtValueLiteral;
-const ansi = @import("ansi");
 
 pub const version = "17.0.0";
 
@@ -13,71 +10,44 @@ pub fn Main(comptime T: type) type {
     comptime std.debug.assert(@hasDecl(T, "exec"));
     return struct {
         pub fn do() !void {
-            var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-            const alloc = gpa.allocator();
-            defer _ = gpa.deinit();
-
-            const max_size = std.math.maxInt(usize);
             const source_url = "https://unicode.org/Public/" ++ version ++ "/ucd/" ++ T.source_file ++ ".txt";
+            var io: std.Io.Threaded = .init(std.heap.page_allocator, .{});
+            defer io.deinit();
+            const response = try std.process.run(std.heap.page_allocator, io.io(), .{
+                .argv = &.{ "curl", "-fsSL", source_url },
+            });
+            defer std.heap.page_allocator.free(response.stdout);
+            defer std.heap.page_allocator.free(response.stderr);
+            if (response.term != .exited or response.term.exited != 0) return error.DownloadFailed;
 
-            //
-            std.log.info("{s}", .{T.dest_file});
+            const file = try std.Io.Dir.cwd().createFile(io.io(), T.dest_file, .{});
+            defer file.close(io.io());
+            var w = file.writer(io.io(), &.{});
+            const writer = &w.interface;
 
-            const file = try std.fs.cwd().createFile(T.dest_file, .{});
-            defer file.close();
-            var bufw = std.io.bufferedWriter(file.writer());
-            const w = bufw.writer();
-
-            try w.writeAll(
+            try writer.writeAll(
                 \\// This file is part of the Unicode Character Database
                 \\// For documentation, see http://www.unicode.org/reports/tr44/
                 \\//
                 \\
             );
-            try w.print(
+            try writer.print(
                 \\// Based on the source file: {s}
                 \\//
                 \\// zig fmt: off
                 \\
                 \\
             , .{source_url});
-            try w.writeAll(T.dest_header);
+            try writer.writeAll(T.dest_header);
 
-            const req = try zfetch.Request.init(alloc, source_url, null);
-            defer req.deinit();
-            try req.do(.GET, null, null);
-            const r = req.reader();
-
-            var line_num: usize = 1;
-            std.debug.print("0", .{});
-
-            var arena = std.heap.ArenaAllocator.init(alloc);
-            defer arena.deinit();
-            while (true) {
-                const line_raw = r.readUntilDelimiterAlloc(alloc, '\n', max_size) catch |err| switch (err) {
-                    error.EndOfStream => break,
-                    else => |e| return e,
-                };
-                defer alloc.free(line_raw);
-
-                var real = std.mem.splitScalar(u8, line_raw, '#');
-                const line = real.first();
-
-                if (line.len == 0) {
-                    continue;
-                }
-
-                try T.exec(arena.allocator(), line, w);
-
-                std.debug.print("{s}", .{ansi.csi.CursorHorzAbs(1)});
-                std.debug.print("{s}", .{ansi.csi.EraseInLine(0)});
-                std.debug.print("{d}", .{line_num});
-                line_num += 1;
+            var lines = std.mem.splitScalar(u8, response.stdout, '\n');
+            while (lines.next()) |raw_line| {
+                const line = std.mem.trim(u8, raw_line[0..(std.mem.indexOfScalar(u8, raw_line, '#') orelse raw_line.len)], " \t\r");
+                if (line.len == 0) continue;
+                try T.exec(std.heap.page_allocator, line, writer);
             }
-            std.debug.print("\n", .{});
-            try w.writeAll(T.dest_footer);
-            if (@hasDecl(T, "after")) try T.after(arena.allocator(), w);
-            try bufw.flush();
+            try writer.writeAll(T.dest_footer);
+            if (@hasDecl(T, "after")) try T.after(std.heap.page_allocator, writer);
         }
     };
 }
@@ -95,7 +65,7 @@ pub fn RangeEnum(comptime prop: []const u8) type {
             var it = std.mem.tokenizeAny(u8, line, "; ");
 
             const first = it.next().?;
-            const next = std.mem.trimRight(u8, it.next().?, "#");
+            const next = std.mem.trimEnd(u8, it.next().?, "#");
 
             if (std.mem.indexOf(u8, first, "..")) |index| {
                 const start = first[0..index];

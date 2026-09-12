@@ -33,6 +33,7 @@ pub const special_casing = @import("./special_casing.zig");
 pub const unicode_data = @import("./unicode_data.zig");
 pub const vertical_orientation = @import("./vertical_orientation.zig");
 pub const emoji = @import("./emoji.zig");
+pub const grapheme_break_property = @import("./grapheme_break_property.zig");
 
 /// https://www.unicode.org/reports/tr44/#General_Category_Values
 pub const GeneralCategory = DerivedPropertyEnum("gc");

@@ -32,9 +32,31 @@ test {
     _ = &ucd.scripts.data;
     _ = &ucd.vertical_orientation.data;
     _ = &ucd.emoji.data;
+    _ = &ucd.grapheme_break_property.data;
     _ = &ucd.script_extensions.data;
     _ = &ucd.property_aliases.data;
     _ = &ucd.property_value_aliases.data;
     _ = &ucd.unicode_data.data_code;
     _ = &ucd.special_casing.data;
+}
+
+test "grapheme cluster break lookup" {
+    const gcb = ucd.grapheme_break_property;
+    try std.testing.expectEqual(@as(u16, 4), @bitSizeOf(gcb.GraphemeBreakProperty.Property));
+    const cases = [_]struct { codepoint: u21, property: gcb.GraphemeBreakProperty.Property }{
+        .{ .codepoint = 0x0000, .property = .Control },
+        .{ .codepoint = 0x000D, .property = .CR },
+        .{ .codepoint = 0x000A, .property = .LF },
+        .{ .codepoint = 0x0300, .property = .Extend },
+        .{ .codepoint = 0x200D, .property = .ZWJ },
+        .{ .codepoint = 0x1F1E6, .property = .Regional_Indicator },
+        .{ .codepoint = 0x1100, .property = .L },
+        .{ .codepoint = 0x1160, .property = .V },
+        .{ .codepoint = 0x11A8, .property = .T },
+        .{ .codepoint = 0xAC00, .property = .LV },
+        .{ .codepoint = 0xAC01, .property = .LVT },
+        .{ .codepoint = 0x0041, .property = .Other },
+    };
+
+    for (cases) |case| try std.testing.expectEqual(case.property, gcb.get(case.codepoint));
 }
