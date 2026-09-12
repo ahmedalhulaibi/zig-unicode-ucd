@@ -15,6 +15,7 @@ pub const emoji_sources = @import("./emoji_sources.zig");
 pub const equivalent_unified_ideograph = @import("./equivalent_unified_ideograph.zig");
 pub const hangul_syllable_type = @import("./hangul_syllable_type.zig");
 // Index.txt                           // not likely very useful for us
+pub const indic_conjunct_break = @import("./indic_conjunct_break.zig");
 pub const indic_positional_category = @import("./indic_positional_category.zig");
 pub const indic_syllabic_category = @import("./indic_syllabic_category.zig");
 pub const jamo = @import("./jamo.zig");

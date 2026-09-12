@@ -21,6 +21,7 @@ test {
     _ = &ucd.emoji_sources.data;
     _ = &ucd.equivalent_unified_ideograph.data;
     _ = &ucd.hangul_syllable_type.data;
+    _ = &ucd.indic_conjunct_break.data;
     _ = &ucd.indic_positional_category.data;
     _ = &ucd.indic_syllabic_category.data;
     _ = &ucd.jamo.data;
@@ -38,6 +39,15 @@ test {
     _ = &ucd.property_value_aliases.data;
     _ = &ucd.unicode_data.data_code;
     _ = &ucd.special_casing.data;
+}
+
+test "Indic conjunct break lookup" {
+    const incb = ucd.indic_conjunct_break;
+    try std.testing.expectEqual(@as(u16, 2), @bitSizeOf(incb.IndicConjunctBreak.Property));
+    try std.testing.expectEqual(incb.IndicConjunctBreak.Property.Consonant, incb.get(0x0915));
+    try std.testing.expectEqual(incb.IndicConjunctBreak.Property.Linker, incb.get(0x094D));
+    try std.testing.expectEqual(incb.IndicConjunctBreak.Property.Extend, incb.get(0x0300));
+    try std.testing.expectEqual(incb.IndicConjunctBreak.Property.None, incb.get(0x0041));
 }
 
 test "grapheme cluster break lookup" {

@@ -16,6 +16,7 @@ const files = [_]type{
     @import("./scripts/EquivalentUnifiedIdeograph.zig"),
     @import("./scripts/GraphemeBreakProperty.zig"),
     @import("./scripts/HangulSyllableType.zig"),
+    @import("./scripts/IndicConjunctBreak.zig"),
     @import("./scripts/IndicPositionalCategory.zig"),
     @import("./scripts/IndicSyllabicCategory.zig"),
     @import("./scripts/Jamo.zig"),
