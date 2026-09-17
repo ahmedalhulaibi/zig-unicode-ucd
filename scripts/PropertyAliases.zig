@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "PropertyAliases";
 
     pub const dest_file = "src/property_aliases.zig";
@@ -24,15 +24,15 @@ pub usingnamespace common.Main(struct {
 
         const short = it.next().?;
         const long = it.next().?;
-        try writer.print("    .{{ \"{}\", \"{}\" }},\n", .{
-            std.zig.fmtEscapes(short),
-            std.zig.fmtEscapes(long),
+        try writer.print("    .{{ \"{f}\", \"{f}\" }},\n", .{
+            std.zig.fmtString(short),
+            std.zig.fmtString(long),
         });
         while (it.next()) |more| {
-            try writer.print("    .{{ \"{}\", \"{}\" }},\n", .{
-                std.zig.fmtEscapes(more),
-                std.zig.fmtEscapes(long),
+            try writer.print("    .{{ \"{f}\", \"{f}\" }},\n", .{
+                std.zig.fmtString(more),
+                std.zig.fmtString(long),
             });
         }
     }
-});
+}).do;

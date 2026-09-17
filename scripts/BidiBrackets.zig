@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "BidiBrackets";
 
     pub const dest_file = "src/bidi_brackets.zig";
@@ -38,4 +38,4 @@ pub usingnamespace common.Main(struct {
 
         try writer.print("    .{{ .codepoint = 0x{s}, .pair = 0x{s}, .type = .{s} }},\n", .{ a, b, c[0..1] });
     }
-});
+}).do;

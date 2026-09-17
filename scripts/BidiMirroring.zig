@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "BidiMirroring";
 
     pub const dest_file = "src/bidi_mirroring.zig";
@@ -29,4 +29,4 @@ pub usingnamespace common.Main(struct {
 
         try writer.print("    .{{ .codepoint = 0x{s}, .mirror = 0x{s} }},\n", .{ c, m });
     }
-});
+}).do;

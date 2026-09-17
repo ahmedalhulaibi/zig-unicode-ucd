@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "CaseFolding";
 
     pub const dest_file = "src/case_folding.zig";
@@ -38,18 +38,17 @@ pub usingnamespace common.Main(struct {
 
     pub fn exec(alloc: std.mem.Allocator, line: []const u8, writer: anytype) !void {
         _ = alloc;
-        var it = std.mem.splitSequence(u8, line, "; ");
-        const code = it.next().?;
-        const status = it.next().?;
+        var it = std.mem.splitScalar(u8, line, ';');
+        const code = std.mem.trim(u8, it.next().?, " \t");
+        const status = std.mem.trim(u8, it.next().?, " \t");
+        const mapping = std.mem.trim(u8, it.next().?, " \t");
         try writer.print("    .{{ .code = 0x{s}, .status = .{s}, .mapping = .{{ .{s} =", .{ code, status, status });
 
         switch (std.meta.stringToEnum(enum { C, F, S, T }, status) orelse @panic(status)) {
             .C, .S, .T => {
-                const mapping = it.next().?;
                 try writer.print(" 0x{s}", .{mapping});
             },
             .F => {
-                const mapping = it.next().?;
                 var jt = std.mem.splitScalar(u8, mapping, ' ');
                 try writer.writeAll(" &[_]u21{");
                 while (jt.next()) |jtem| {
@@ -60,4 +59,4 @@ pub usingnamespace common.Main(struct {
         }
         try writer.writeAll(" } },\n");
     }
-});
+}).do;

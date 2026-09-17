@@ -1,6 +1,6 @@
 const std = @import("std");
 
-pub const version = "17.0.0";
+pub const version = "18.0.0";
 
 pub fn Main(comptime T: type) type {
     comptime std.debug.assert(@hasDecl(T, "source_file"));

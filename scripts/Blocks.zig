@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "Blocks";
 
     pub const dest_file = "src/blocks.zig";
@@ -33,4 +33,4 @@ pub usingnamespace common.Main(struct {
 
         try writer.print("    .{{ .from = 0x{s}, .to = 0x{s}, .name = \"{s}\" }},\n", .{ from, to, name });
     }
-});
+}).do;

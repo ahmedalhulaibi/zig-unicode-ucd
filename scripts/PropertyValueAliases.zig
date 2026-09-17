@@ -2,7 +2,7 @@ const std = @import("std");
 const common = @import("./_common.zig");
 const extras = @import("extras");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "PropertyValueAliases";
 
     pub const dest_file = "src/property_value_aliases.zig";
@@ -33,21 +33,21 @@ pub usingnamespace common.Main(struct {
             vals[2] = it.next().?;
         };
 
-        try writer.print("    .{{ \"{}\", \"{}\", \"{}\" }},\n", .{
-            std.zig.fmtEscapes(vals[0]),
-            std.zig.fmtEscapes(vals[1]),
-            std.zig.fmtEscapes(vals[2]),
+        try writer.print("    .{{ \"{f}\", \"{f}\", \"{f}\" }},\n", .{
+            std.zig.fmtString(vals[0]),
+            std.zig.fmtString(vals[1]),
+            std.zig.fmtString(vals[2]),
         });
 
         while (it.next()) |more| {
-            try writer.print("    .{{ \"{}\", \"{}\", \"{}\" }},\n", .{
-                std.zig.fmtEscapes(vals[0]),
-                std.zig.fmtEscapes(more),
-                std.zig.fmtEscapes(vals[2]),
+            try writer.print("    .{{ \"{f}\", \"{f}\", \"{f}\" }},\n", .{
+                std.zig.fmtString(vals[0]),
+                std.zig.fmtString(more),
+                std.zig.fmtString(vals[2]),
             });
         }
     }
-});
+}).do;
 
 fn flip(foo: anytype) !void {
     _ = foo catch return;

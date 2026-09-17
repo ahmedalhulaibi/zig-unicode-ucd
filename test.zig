@@ -70,3 +70,19 @@ test "grapheme cluster break lookup" {
 
     for (cases) |case| try std.testing.expectEqual(case.property, gcb.get(case.codepoint));
 }
+
+test "Unicode 18 data" {
+    const bengali_sign = ucd.unicode_data.find(0x11DF0);
+    try std.testing.expectEqual(@as(u21, 0x11DF0), ucd.unicode_data.data_code[bengali_sign]);
+    try std.testing.expectEqualStrings("BENGALI SIGN COMBINING ANUSVARA ABOVE", ucd.unicode_data.data_name[bengali_sign]);
+
+    var seal: ?ucd.blocks.Block = null;
+    for (ucd.blocks.data) |block| {
+        if (block.from == 0x3D000) seal = block;
+    }
+    try std.testing.expectEqualDeep(ucd.blocks.Block{
+        .from = 0x3D000,
+        .to = 0x3FC3F,
+        .name = "Seal",
+    }, seal.?);
+}

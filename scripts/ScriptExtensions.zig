@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "ScriptExtensions";
 
     pub const dest_file = "src/script_extensions.zig";
@@ -34,21 +34,19 @@ pub usingnamespace common.Main(struct {
             const end = try std.fmt.parseInt(u21, first[index + 2 ..], 16);
             var i = start;
             while (i <= end) : (i += 1) {
-                try writer.print("    .{{ .code = 0x{X}, .scripts = {} }},\n", .{ i, fmtScripts(it.rest()) });
+                try writer.print("    .{{ .code = 0x{X}, .scripts = {f} }},\n", .{ i, fmtScripts(it.rest()) });
             }
         } else {
-            try writer.print("    .{{ .code = 0x{s}, .scripts = {} }},\n", .{ first, fmtScripts(it.rest()) });
+            try writer.print("    .{{ .code = 0x{s}, .scripts = {f} }},\n", .{ first, fmtScripts(it.rest()) });
         }
     }
-});
+}).do;
 
-fn fmtScripts(bytes: []const u8) std.fmt.Formatter(formatScripts) {
+fn fmtScripts(bytes: []const u8) std.fmt.Alt([]const u8, formatScripts) {
     return .{ .data = bytes };
 }
 
-fn formatScripts(bytes: []const u8, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
-    _ = fmt;
-    _ = options;
+fn formatScripts(bytes: []const u8, writer: *std.Io.Writer) std.Io.Writer.Error!void {
     try writer.writeAll("&.{");
     var it = std.mem.splitScalar(u8, bytes, ' ');
     while (it.next()) |item| {

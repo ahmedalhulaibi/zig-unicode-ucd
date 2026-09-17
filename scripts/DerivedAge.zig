@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "DerivedAge";
 
     pub const dest_file = "src/derived_age.zig";
@@ -42,4 +42,4 @@ pub usingnamespace common.Main(struct {
             try writer.print(" .since = .{{ {s},{s} }} }},\n", .{ major, minor });
         }
     }
-});
+}).do;

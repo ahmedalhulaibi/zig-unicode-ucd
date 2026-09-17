@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "NamedSequencesProv";
 
     pub const dest_file = "src/named_sequences_prov.zig";
@@ -25,7 +25,7 @@ pub usingnamespace common.Main(struct {
         _ = alloc;
         var it = std.mem.splitScalar(u8, line, ';');
 
-        try writer.print("    .{{ .name = \"{}\", .sequence = &[_]u21{{", .{std.zig.fmtEscapes(it.next().?)});
+        try writer.print("    .{{ .name = \"{f}\", .sequence = &[_]u21{{", .{std.zig.fmtString(it.next().?)});
 
         var jt = std.mem.tokenizeScalar(u8, it.next().?, ' ');
         while (jt.next()) |jtem| {
@@ -33,4 +33,4 @@ pub usingnamespace common.Main(struct {
         }
         try writer.writeAll(" } },\n");
     }
-});
+}).do;

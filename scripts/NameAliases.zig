@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "NameAliases";
 
     pub const dest_file = "src/name_aliases.zig";
@@ -34,10 +34,10 @@ pub usingnamespace common.Main(struct {
         _ = alloc;
         var it = std.mem.splitScalar(u8, line, ';');
 
-        try writer.print("    .{{ .code = 0x{s}, .alias = \"{}\", .type = .{s} }},\n", .{
+        try writer.print("    .{{ .code = 0x{s}, .alias = \"{f}\", .type = .{s} }},\n", .{
             it.next().?,
-            std.zig.fmtEscapes(it.next().?),
+            std.zig.fmtString(it.next().?),
             it.next().?,
         });
     }
-});
+}).do;

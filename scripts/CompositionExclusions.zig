@@ -2,7 +2,7 @@ const std = @import("std");
 const common = @import("./_common.zig");
 const extras = @import("extras");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "CompositionExclusions";
 
     pub const dest_file = "src/composition_exclusions.zig";
@@ -22,4 +22,4 @@ pub usingnamespace common.Main(struct {
         var it = std.mem.splitScalar(u8, line, ' ');
         try writer.print("    0x{s},\n", .{it.next().?});
     }
-});
+}).do;

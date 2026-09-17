@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "ArabicShaping";
 
     pub const dest_file = "src/arabic_shaping.zig";
@@ -131,6 +131,16 @@ pub usingnamespace common.Main(struct {
         \\        VERTICAL_TAIL,
         \\        KASHMIRI_YEH,
         \\        THIN_NOON,
+        \\        CROWN_AIN,
+        \\        CROWN_BEH,
+        \\        CROWN_FEH,
+        \\        CROWN_HAH,
+        \\        CROWN_HEH,
+        \\        CROWN_KAF,
+        \\        CROWN_MEEM,
+        \\        CROWN_SAD,
+        \\        CROWN_SEEN,
+        \\        CROWN_TAH,
         \\    };
         \\};
         \\
@@ -153,4 +163,4 @@ pub usingnamespace common.Main(struct {
 
         try writer.print("    .{{ .codepoint = 0x{s}, .schematic_name = \"{s}\", .joining_type = .{s}, .joining_group = .{s} }},\n", .{ c, n, t, g2 });
     }
-});
+}).do;

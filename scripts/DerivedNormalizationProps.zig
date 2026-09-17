@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "DerivedNormalizationProps";
 
     pub const dest_file = "src/derived_normalization_props.zig";
@@ -28,7 +28,7 @@ pub usingnamespace common.Main(struct {
         const rest = it.rest();
 
         const gop = try sections.getOrPut(alloc, try alloc.dupe(u8, rest));
-        if (!gop.found_existing) gop.value_ptr.* = .{};
+        if (!gop.found_existing) gop.value_ptr.* = .empty;
         try gop.value_ptr.append(alloc, try alloc.dupe(u8, cp_range));
     }
 
@@ -36,7 +36,7 @@ pub usingnamespace common.Main(struct {
         _ = alloc;
 
         {
-            const list = sections.fetchSwapRemove("Full_Composition_Exclusion ").?;
+            const list = sections.fetchSwapRemove("Full_Composition_Exclusion").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const full_composition_exclusion = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -63,7 +63,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFD_QC; N "
-            const list = sections.fetchSwapRemove("NFD_QC; N ").?;
+            const list = sections.fetchSwapRemove("NFD_QC; N").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfd_qc_n = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -90,7 +90,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFC_QC; N "
-            const list = sections.fetchSwapRemove("NFC_QC; N ").?;
+            const list = sections.fetchSwapRemove("NFC_QC; N").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfc_qc_n = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -117,7 +117,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFC_QC; M "
-            const list = sections.fetchSwapRemove("NFC_QC; M ").?;
+            const list = sections.fetchSwapRemove("NFC_QC; M").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfc_qc_m = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -144,7 +144,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFKD_QC; N "
-            const list = sections.fetchSwapRemove("NFKD_QC; N ").?;
+            const list = sections.fetchSwapRemove("NFKD_QC; N").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfkd_qc_n = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -171,7 +171,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFKC_QC; N "
-            const list = sections.fetchSwapRemove("NFKC_QC; N ").?;
+            const list = sections.fetchSwapRemove("NFKC_QC; N").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfkc_qc_n = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -198,7 +198,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "NFKC_QC; M "
-            const list = sections.fetchSwapRemove("NFKC_QC; M ").?;
+            const list = sections.fetchSwapRemove("NFKC_QC; M").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const nfkc_qc_m = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -231,7 +231,7 @@ pub usingnamespace common.Main(struct {
         }
         {
             // "Changes_When_NFKC_Casefolded "
-            const list = sections.fetchSwapRemove("Changes_When_NFKC_Casefolded ").?;
+            const list = sections.fetchSwapRemove("Changes_When_NFKC_Casefolded").?;
             try writer.writeAll("\n");
             try writer.writeAll("pub const changes_when_nfc_casefolded = struct {\n");
             try writer.writeAll("    pub const data = [_]u21{\n");
@@ -257,4 +257,4 @@ pub usingnamespace common.Main(struct {
             try writer.writeAll("};\n");
         }
     }
-});
+}).do;

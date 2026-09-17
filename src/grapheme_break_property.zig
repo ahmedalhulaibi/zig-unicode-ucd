@@ -1,7 +1,7 @@
 // This file is part of the Unicode Character Database
 // For documentation, see http://www.unicode.org/reports/tr44/
 //
-// Based on the source file: https://unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakProperty.txt
+// Based on the source file: https://unicode.org/Public/18.0.0/ucd/auxiliary/GraphemeBreakProperty.txt
 //
 // zig fmt: off
 
@@ -79,7 +79,7 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x05BF, .to = 0x05BF, .property = .Extend },
     .{ .from = 0x05C1, .to = 0x05C2, .property = .Extend },
     .{ .from = 0x05C4, .to = 0x05C5, .property = .Extend },
-    .{ .from = 0x05C7, .to = 0x05C7, .property = .Extend },
+    .{ .from = 0x05C7, .to = 0x05C9, .property = .Extend },
     .{ .from = 0x0610, .to = 0x061A, .property = .Extend },
     .{ .from = 0x064B, .to = 0x065F, .property = .Extend },
     .{ .from = 0x0670, .to = 0x0670, .property = .Extend },
@@ -135,7 +135,7 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x0B3F, .to = 0x0B3F, .property = .Extend },
     .{ .from = 0x0B41, .to = 0x0B44, .property = .Extend },
     .{ .from = 0x0B4D, .to = 0x0B4D, .property = .Extend },
-    .{ .from = 0x0B55, .to = 0x0B56, .property = .Extend },
+    .{ .from = 0x0B53, .to = 0x0B56, .property = .Extend },
     .{ .from = 0x0B57, .to = 0x0B57, .property = .Extend },
     .{ .from = 0x0B62, .to = 0x0B63, .property = .Extend },
     .{ .from = 0x0B82, .to = 0x0B82, .property = .Extend },
@@ -233,8 +233,7 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x1A7F, .to = 0x1A7F, .property = .Extend },
     .{ .from = 0x1AB0, .to = 0x1ABD, .property = .Extend },
     .{ .from = 0x1ABE, .to = 0x1ABE, .property = .Extend },
-    .{ .from = 0x1ABF, .to = 0x1ADD, .property = .Extend },
-    .{ .from = 0x1AE0, .to = 0x1AEB, .property = .Extend },
+    .{ .from = 0x1ABF, .to = 0x1AF0, .property = .Extend },
     .{ .from = 0x1B00, .to = 0x1B03, .property = .Extend },
     .{ .from = 0x1B34, .to = 0x1B34, .property = .Extend },
     .{ .from = 0x1B35, .to = 0x1B35, .property = .Extend },
@@ -330,7 +329,8 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x10D24, .to = 0x10D27, .property = .Extend },
     .{ .from = 0x10D69, .to = 0x10D6D, .property = .Extend },
     .{ .from = 0x10EAB, .to = 0x10EAC, .property = .Extend },
-    .{ .from = 0x10EFA, .to = 0x10EFF, .property = .Extend },
+    .{ .from = 0x10ECB, .to = 0x10ECF, .property = .Extend },
+    .{ .from = 0x10EF0, .to = 0x10EFF, .property = .Extend },
     .{ .from = 0x10F46, .to = 0x10F50, .property = .Extend },
     .{ .from = 0x10F82, .to = 0x10F85, .property = .Extend },
     .{ .from = 0x11001, .to = 0x11001, .property = .Extend },
@@ -439,6 +439,7 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x11D90, .to = 0x11D91, .property = .Extend },
     .{ .from = 0x11D95, .to = 0x11D95, .property = .Extend },
     .{ .from = 0x11D97, .to = 0x11D97, .property = .Extend },
+    .{ .from = 0x11DF0, .to = 0x11DF0, .property = .Extend },
     .{ .from = 0x11EF3, .to = 0x11EF4, .property = .Extend },
     .{ .from = 0x11F00, .to = 0x11F01, .property = .Extend },
     .{ .from = 0x11F36, .to = 0x11F3A, .property = .Extend },
@@ -459,6 +460,7 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x1BC9D, .to = 0x1BC9E, .property = .Extend },
     .{ .from = 0x1CF00, .to = 0x1CF2D, .property = .Extend },
     .{ .from = 0x1CF30, .to = 0x1CF46, .property = .Extend },
+    .{ .from = 0x1D127, .to = 0x1D128, .property = .Extend },
     .{ .from = 0x1D165, .to = 0x1D166, .property = .Extend },
     .{ .from = 0x1D167, .to = 0x1D169, .property = .Extend },
     .{ .from = 0x1D16D, .to = 0x1D172, .property = .Extend },
@@ -466,6 +468,10 @@ pub const data = [_]GraphemeBreakProperty{
     .{ .from = 0x1D185, .to = 0x1D18B, .property = .Extend },
     .{ .from = 0x1D1AA, .to = 0x1D1AD, .property = .Extend },
     .{ .from = 0x1D242, .to = 0x1D244, .property = .Extend },
+    .{ .from = 0x1D250, .to = 0x1D252, .property = .Extend },
+    .{ .from = 0x1D25B, .to = 0x1D25C, .property = .Extend },
+    .{ .from = 0x1D25F, .to = 0x1D25F, .property = .Extend },
+    .{ .from = 0x1D280, .to = 0x1D281, .property = .Extend },
     .{ .from = 0x1DA00, .to = 0x1DA36, .property = .Extend },
     .{ .from = 0x1DA3B, .to = 0x1DA6C, .property = .Extend },
     .{ .from = 0x1DA75, .to = 0x1DA75, .property = .Extend },

@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "IndicSyllabicCategory";
 
     pub const dest_file = "src/indic_syllabic_category.zig";
@@ -41,4 +41,4 @@ pub usingnamespace common.Main(struct {
             try writer.print("    .{{ .code = 0x{s}, .category = .{s} }},\n", .{ first, next });
         }
     }
-});
+}).do;

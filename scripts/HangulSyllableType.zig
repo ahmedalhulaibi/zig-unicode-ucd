@@ -1,7 +1,7 @@
 const std = @import("std");
 const common = @import("./_common.zig");
 
-pub usingnamespace common.Main(struct {
+pub const do = common.Main(struct {
     pub const source_file = "HangulSyllableType";
 
     pub const dest_file = "src/hangul_syllable_type.zig";
@@ -41,4 +41,4 @@ pub usingnamespace common.Main(struct {
             try writer.print(" .prop = .{s} }},\n", .{prop});
         }
     }
-});
+}).do;
